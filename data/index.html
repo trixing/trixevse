@@ -1,0 +1,79 @@
+<html>
+<head>
+<title>Trixing EVSE Wallbox</title>
+</head>
+<body>
+<script>
+console.log(window.location);
+var url = "http://192.168.178.112";
+if (window.location.hostname != "") {
+	url = "";
+}
+var setcurrent = -1;
+
+function post(key, v) {
+	var value = -1;
+	if (v !== undefined) {
+		value = v;
+	} else {
+		var value = document.getElementById(key).value;
+	}
+	var req = new XMLHttpRequest();
+	var params = "value=" + value;
+	req.open('POST', url + "/" + key, true);
+
+	//Send the proper header information along with the request
+	req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+	function reqListener (e) {
+		console.log(e);
+	}
+	
+	req.addEventListener("loadend", reqListener);
+	console.log(params);
+	req.send(params);
+	return false;
+}
+
+function update() {
+	var req = new XMLHttpRequest();
+	function reqListener (e) {
+		//console.log(e);
+  		//console.log(this.response);
+		var data = this.response;
+		if (data) {
+			document.getElementById("data").innerHTML = JSON.stringify(data, null, 2);
+			if (setcurrent != data['evse']['set_current']) {
+				document.getElementById("current").value = data['evse']['set_current'];
+				setcurrent = data['evse']['set_current'];
+			}
+		}
+		setTimeout(update, 2000);
+	}
+	req.addEventListener("loadend", reqListener);
+	req.responseType = "json";
+	req.open("GET", url + "/j");
+	req.send();
+}
+window.onload = function() {
+	update();
+}
+</script>
+<pre id=data>
+	Data loading
+</pre>
+<form onsubmit="post('current'); return false;">
+	Current
+	<input type="text" id="current">
+	<input type="submit" value="set">
+</form>
+
+<input type="button" value="stop charging" onclick="post('charging', 2)">
+<input type="button" value="start charging" onclick="post('charging', 1)">
+
+<form method='POST' action='/update' enctype='multipart/form-data'>
+	<input type='file' name='update'><input type='submit' value='Update'>
+</form>
+
+</body>
+</html>

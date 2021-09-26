@@ -13,11 +13,9 @@ The documentation is work in progress.
 ## Features
 
 -  mDNS listener at trixing-evse.local
--  modbus interface
--  HTTP JSON API
-   ```
-   http://trixing-evse.local/
-   ```
+-  Modbus interface (emulating an AC22 charger from Victron)
+   See `https://github.com/victronenergy/dbus-modbus-client/blob/master/ev_charger.py`
+-  HTTP JSON API `http://trixing-evse.local/j`
 
 ## Updating
 
@@ -33,5 +31,12 @@ curl -F "image=@trixing-evse-wifi.ino.bin" http://trixing-evse.local/update
 
 ## Parts
 
+-  Broken Wallbox (I used a Wallbe Eco 2.0s)
+-  Wemos D1 R1 Mini V3 ESP8266 based WiFi microcontroller
+-  RS48 TTL converter based on MAX485
+-  OLED I2C Display
+   Makerhawk I2C SSD1306 128x32 3.3V/5V
+-  Push Button
+-  SDM130 Din Rail power meter
 -  EVSE DIN w/ RS485
    https://www.evse-wifi.de/produkt/evse-din-ladecontroller-rs485/

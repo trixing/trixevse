@@ -29,6 +29,13 @@ Run update via curl
 curl -F "image=@trixing-evse-wifi.ino.bin" http://trixing-evse.local/update
 ```
 
+## Software
+
+-  Arduino 1.8.13
+-  ArduinoJSON library
+-  ModbusIP library
+-  U8x8 library
+
 ## Parts
 
 -  Broken Wallbox (I used a Wallbe Eco 2.0s)
@@ -37,6 +44,8 @@ curl -F "image=@trixing-evse-wifi.ino.bin" http://trixing-evse.local/update
 -  OLED I2C Display
    Makerhawk I2C SSD1306 128x32 3.3V/5V
 -  Push Button
--  SDM130 Din Rail power meter
+-  SDM120 Modbus Din Rail power meter
+-  Din Rail Normally Open 2-phase relay
+   e.g. Heschen CT1-25 2-pole Normally Open, 25A, 230V
 -  EVSE DIN w/ RS485
    https://www.evse-wifi.de/produkt/evse-din-ladecontroller-rs485/
